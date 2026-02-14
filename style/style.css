@@ -47,7 +47,7 @@ body {
   overflow: hidden;
 }
 
-.container > div:not(.six) {
+.container > div {
   position: absolute;
   left: 0;
   right: 0;
