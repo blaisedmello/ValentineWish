@@ -24,6 +24,12 @@ html {
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
+
+  background-image: url("../img/background.jpg");
+  background-size: cover;          /* fills screen */
+  background-position: center;     /* center image */
+  background-repeat: no-repeat;    /* no tiling */
+  background-attachment: fixed
 }
 
 .container {
