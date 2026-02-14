@@ -120,25 +120,32 @@ body {
 /* PHOTO + LYRICS SECTION */
 /* ========================= */
 
-.six {
+.six{
   position: relative;
-  top: 10vh;
+  height: 100vh;
+
   display: flex;
   flex-direction: column;
+  justify-content: space-between;   /* pushes items apart */
   align-items: center;
-  gap: 20px;
+
+  padding: 60px 20px;               /* top & bottom breathing room */
   z-index: 5;
 }
 
+
 /* PHOTO STACK AREA */
-.photo-stack {
+.photo-stack{
   position: relative;
   width: min(380px, 78vw);
   height: min(380px, 42vh);
-  overflow: hidden;
   border-radius: 20px;
+  overflow: hidden;
   z-index: 1;
+
+  margin-top: 20px;     /* slight push downward */
 }
+
 
 .photo {
   position: absolute;
@@ -147,17 +154,26 @@ body {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.04);
+  transform: scale(1.5);
   z-index: 1;
 }
 
 /* LYRICS (ALWAYS ABOVE PHOTOS) */
-.wish {
+.wish{
   position: relative;
   z-index: 10;
+  text-align: center;
   width: min(900px, 92vw);
-  padding: 10px;
 }
+
+.wish-hbd{
+  margin-bottom: 20px;   /* pushes image downward */
+}
+
+.final-valentine{
+  margin-top: 30px;      /* pushes bottom text downward */
+}
+
 
 .wish-hbd,
 #wishText,
