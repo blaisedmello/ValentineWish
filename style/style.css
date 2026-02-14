@@ -180,13 +180,20 @@ body {
 }
 
 .eight svg {
-  width: 25px;
+  width: 18px;              /* smaller dot */
   position: absolute;
   top: 0;
   left: 0;
   visibility: hidden;
   z-index: -1;
+  opacity: 0;
+  filter: blur(1.2px);      /* soft */
 }
+
+.eight circle {
+  opacity: 0.35;            /* less intense */
+}
+
 
 .eight svg:nth-child(1) {
   top: 7vh;

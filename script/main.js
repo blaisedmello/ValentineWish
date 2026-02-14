@@ -316,18 +316,25 @@ const animationTimeline = () => {
       },
       "party"
     )
-    .staggerTo(
+    .staggerFromTo(
       ".eight svg",
-      1.5,
+      2.0,
       {
         visibility: "visible",
         opacity: 0,
-        scale: 60,
-        repeat: 3,
-        repeatDelay: 1.0,
+        scale: 0.5
       },
-      0.4
+      {
+        opacity: 0.35,
+        scale: 6,
+        y: -25,
+        yoyo: true,
+        repeat: 2,
+        ease: Power1.easeInOut
+      },
+      0.25
     )
+
     .to(".six", 0.5, {
       opacity: 0,
       y: 30,
