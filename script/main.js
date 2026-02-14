@@ -164,32 +164,57 @@ const animationTimeline = () => {
   // ==========================================================
   // SCENE C: Photo3 + Wish (h3 then h5) then Final Valentine ONLY
   // ==========================================================
+// ==========================================================
+// SCENE C: Photo3 + Wish (h3 then h5) then Final Valentine ONLY
+// ==========================================================
   tl.addLabel("sceneC")
-    .to(".photo-3", 1.0, { opacity: 1, scale: 1, ease: Power2.easeOut }, "sceneC")
-    .to(".photo-1", 0.01, { opacity: 0 }, "sceneC")
-    .to(".photo-2", 0.01, { opacity: 0 }, "sceneC")
 
-    // Make sure the H3 letter spans can animate (they are inside h3)
-    .staggerTo(".wish-hbd span", 0.001, { visibility: "visible" }, 0, "sceneC+=0.2")
-    .to(".wish-hbd", 0.01, { opacity: 1, y: 0 }, "sceneC+=0.2") // reveal container
+    // show photo 3
+    .to(".photo-3", 1.0, {
+      opacity: 1,
+      scale: 1,
+      ease: Power2.easeOut
+    }, "sceneC")
+
+    // show H3 container immediately
+    .to(".wish-hbd", 0.01, { opacity: 1, y: 0 }, "sceneC+=0.15")
+
+    // reveal + animate H3 letters immediately
+    .staggerTo(".wish-hbd span", 0.001, { visibility: "visible" }, 0, "sceneC+=0.15")
     .staggerFrom(".wish-hbd span", 0.6, {
       opacity: 0,
       y: -30,
       rotation: 90,
-      ease: Elastic.easeOut.config(1, 0.55),
-    }, 0.05, "sceneC+=0.25")
+      ease: Elastic.easeOut.config(1, 0.55)
+    }, 0.05, "sceneC+=0.15")
 
-    // ✅ h5 should come AFTER h3
-    .to("#wishText", 0.9, { opacity: 1, y: 0, ease: Power2.easeOut }, "+=0.5")
+    // ✅ wait 3 seconds AFTER H3 finishes
+    .to({}, 3.0, {})
 
-    // hold
+    // now show H5
+    .to("#wishText", 1.0, {
+      opacity: 1,
+      y: 0,
+      ease: Power2.easeOut
+    })
+
+    // hold a bit
     .to({}, 1.1, {})
 
-    // ✅ fade out h3 + h5 before final-valentine
-    .to([".wish-hbd", "#wishText"], 0.9, { opacity: 0, y: -20, ease: Power2.easeInOut })
+    // fade out H3 + H5
+    .to([".wish-hbd", "#wishText"], 0.9, {
+      opacity: 0,
+      y: -20,
+      ease: Power2.easeInOut
+    })
 
     // show final valentine line
-    .to("#finalValentine", 1.1, { opacity: 1, y: 0, ease: Power2.easeOut }, "+=0.25");
+    .to("#finalValentine", 1.1, {
+      opacity: 1,
+      y: 0,
+      ease: Power2.easeOut
+    }, "+=0.25");
+
 
   // ==========================================================
   // Soft circles: bigger scale + more movement
