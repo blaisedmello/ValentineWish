@@ -230,7 +230,7 @@ const animationTimeline = () => {
     });
   }
 };
-
+// hi
 window.addEventListener("DOMContentLoaded", () => {
   initStartGate();
 });
