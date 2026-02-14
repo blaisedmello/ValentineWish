@@ -1,6 +1,9 @@
 html {
   box-sizing: border-box;
 }
+*, *::before, *::after {
+  box-sizing: inherit;
+}
 
 body {
   margin: 0;
@@ -15,7 +18,6 @@ body {
 /* ========================= */
 /* START OVERLAY */
 /* ========================= */
-
 #startOverlay {
   position: fixed;
   inset: 0;
@@ -37,7 +39,6 @@ body {
 /* ========================= */
 /* MAIN CONTAINER */
 /* ========================= */
-
 .container {
   height: 100vh;
   width: 100vw;
@@ -47,7 +48,8 @@ body {
   overflow: hidden;
 }
 
-.container > div {
+/* ✅ IMPORTANT: Apply absolute layout to all scenes EXCEPT .six */
+.container > div:not(.six) {
   position: absolute;
   left: 0;
   right: 0;
@@ -57,18 +59,20 @@ body {
 /* ========================= */
 /* TEXT SECTIONS */
 /* ========================= */
-
 .one { font-size: 4.5rem; }
 .two { font-size: 1.2rem; font-weight: lighter; }
 .three { font-size: 3rem; }
 
 .four .text-box {
   width: 600px;
+  max-width: 92vw;
   margin: 0 auto;
   border: 3px solid #aaa;
-  border-radius: 5px;
+  border-radius: 6px;
   padding: 10px;
   position: relative;
+  background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(2px);
 }
 
 .text-box p {
@@ -93,7 +97,6 @@ body {
 /* ========================= */
 /* IDEA SECTION */
 /* ========================= */
-
 .five p {
   font-size: 2rem;
   position: absolute;
@@ -101,9 +104,7 @@ body {
   right: 0;
 }
 
-.idea-5 {
-  font-size: 4rem;
-}
+.idea-5 { font-size: 4rem; }
 
 .idea-6 {
   display: flex;
@@ -112,40 +113,45 @@ body {
   gap: 10px;
 }
 
-.idea-6 span {
-  font-size: 3rem;
-}
+.idea-6 span { font-size: 3rem; }
 
 /* ========================= */
-/* PHOTO + LYRICS SECTION */
+/* PHOTO + LYRICS SECTION (.six) */
 /* ========================= */
-
-.six{
+.six {
   position: relative;
   height: 100vh;
+  width: 100vw;
 
+  /* ✅ your own layout (no absolute top rule) */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;   /* pushes items apart */
+  justify-content: space-between; /* top lyric / photo / bottom lyric */
   align-items: center;
 
-  padding: 60px 20px;               /* top & bottom breathing room */
-  z-index: 5;
-}
+  /* ✅ spacing fixes: top text higher, bottom text lower, photo centered */
+  padding-top: 40px;
+  padding-bottom: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
 
+  z-index: 50; /* above circles + balloons */
+}
 
 /* PHOTO STACK AREA */
-.photo-stack{
+.photo-stack {
   position: relative;
-  width: min(380px, 78vw);
-  height: min(380px, 42vh);
-  border-radius: 20px;
+  width: min(420px, 80vw);
+  height: min(420px, 48vh);
+  border-radius: 22px;
   overflow: hidden;
-  z-index: 1;
 
-  margin-top: 20px;     /* slight push downward */
+  /* ✅ shift image down a bit (your request) */
+  margin-top: 20px;
+
+  z-index: 10; /* below text */
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
 }
-
 
 .photo {
   position: absolute;
@@ -154,61 +160,62 @@ body {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.5);
+  transform: scale(1.05);
   z-index: 1;
 }
 
 /* LYRICS (ALWAYS ABOVE PHOTOS) */
-.wish{
+.wish {
   position: relative;
-  z-index: 10;
+  z-index: 60; /* ✅ always above images */
   text-align: center;
   width: min(900px, 92vw);
 }
 
-.wish-hbd{
-  margin-bottom: 20px;   /* pushes image downward */
-}
-
-.final-valentine{
-  margin-top: 30px;      /* pushes bottom text downward */
-}
-
-
-.wish-hbd,
-#wishText,
-.final-valentine {
-  margin: 0;
-  color: #ffffff;
-  text-shadow:
-    0 0 8px rgba(0,0,0,0.8),
-    0 2px 6px rgba(0,0,0,0.7),
-    0 0 18px rgba(0,0,0,0.6);
-}
-
+/* ✅ Top text a bit higher (less gap) */
 .wish-hbd {
+  margin: 0 0 10px 0;
   font-size: 2.6rem;
 }
 
+/* ✅ h5 spacing and starts hidden (your JS animates it) */
 #wishText {
+  margin: 0;
   font-size: 1.5rem;
-  margin-top: 10px;
+  opacity: 0; /* keep hidden until JS shows it */
 }
 
+/* ✅ final line pushed down a bit */
 .final-valentine {
+  margin-top: 30px;
   font-size: 2.8rem;
   opacity: 0;
+}
+
+/* ✅ Shadow for white lyrics (readability) */
+.wish-hbd,
+#wishText,
+.final-valentine,
+.one, .two, .three,
+.five p,
+.nine p,
+.last-smile {
+  color: #ffffff;
+  text-shadow:
+    0 0 8px rgba(0,0,0,0.85),
+    0 2px 6px rgba(0,0,0,0.70),
+    0 0 18px rgba(0,0,0,0.55);
 }
 
 /* ========================= */
 /* BALLOONS */
 /* ========================= */
+.seven { z-index: 5; }
 
 .baloons img {
   position: absolute;
   width: 200px;
 }
-
 .baloons img:nth-child(even) { left: 10%; }
 .baloons img:nth-child(odd) { right: 10%; }
 .baloons img:nth-child(3n) { left: 30%; }
@@ -216,12 +223,13 @@ body {
 /* ========================= */
 /* SOFT GLOW CIRCLES */
 /* ========================= */
-
 .eight {
   width: 100vw;
   height: 100vh;
   position: fixed;
-  top: 0;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1; /* ✅ behind .six */
 }
 
 .eight svg {
@@ -230,15 +238,11 @@ body {
   position: absolute;
   visibility: hidden;
   opacity: 0;
-  z-index: 2;
-  filter: blur(6px);
+  filter: blur(8px);  /* ✅ softer edges */
 }
 
-.eight circle {
-  opacity: 0.8;
-}
+.eight circle { opacity: 0.8; }
 
-/* Soft pink tones */
 .eight svg:nth-child(1) { top: 7vh; left: 5vw; fill: #ff9acb; }
 .eight svg:nth-child(2) { top: 23vh; left: 35vw; fill: #ff7fb4; }
 .eight svg:nth-child(3) { top: 33vh; left: 23vw; fill: #ffb3da; }
@@ -252,7 +256,6 @@ body {
 /* ========================= */
 /* FINAL SECTION */
 /* ========================= */
-
 .nine p {
   font-size: 2rem;
   font-weight: lighter;
@@ -265,22 +268,13 @@ body {
 /* ========================= */
 /* RESPONSIVE */
 /* ========================= */
-
 @media (max-width: 600px) {
   .photo-stack {
-    width: min(300px, 85vw);
-    height: min(300px, 34vh);
+    width: min(320px, 86vw);
+    height: min(320px, 38vh);
   }
 
-  .wish-hbd {
-    font-size: 2rem;
-  }
-
-  #wishText {
-    font-size: 1.2rem;
-  }
-
-  .final-valentine {
-    font-size: 2rem;
-  }
+  .wish-hbd { font-size: 2rem; }
+  #wishText { font-size: 1.2rem; }
+  .final-valentine { font-size: 2rem; }
 }

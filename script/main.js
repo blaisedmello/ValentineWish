@@ -205,7 +205,7 @@ const animationTimeline = () => {
 
   // Outro
   tl.staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
-    .to(".last-smile", 0.5, { rotation: 90 }, "+=1");
+    .to(".last-smile", 0.5, "+=1");
 
   // Replay
   const replay = document.getElementById("replay");
