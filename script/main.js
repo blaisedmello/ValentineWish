@@ -142,7 +142,25 @@ const animationTimeline = () => {
     }, 0.06)
 
     // show final valentine line ONLY at the end
-    .to("#finalValentine", 0.9, { opacity: 1, y: 0, ease: Power2.easeOut }, "+=0.2")
+    // Fade out wish lines first
+    .to(".wish-hbd", 0.8, {
+      opacity: 0,
+      y: -20,
+      ease: Power2.easeInOut
+    })
+    .to("#wishText", 0.8, {
+      opacity: 0,
+      y: -20,
+      ease: Power2.easeInOut
+    }, "-=0.6") // overlap slightly for smooth fade
+
+    // Then reveal final valentine line
+    .to("#finalValentine", 1.0, {
+      opacity: 1,
+      y: 0,
+      ease: Power2.easeOut
+    }, "+=0.3")
+
 
     // ✅ Softer circle animation (more movement + bigger scale)
     .staggerFromTo(".eight svg", 2.4,
