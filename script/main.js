@@ -71,15 +71,18 @@ const animationTimeline = () => {
   // Helper: wrap each character in a span, preserving spaces
   function wrapCharsPreserveSpaces(el) {
     if (!el) return;
-    const chars = el.innerText.split("");
+
+    // cache original text so replay doesn't break it
+    if (!el.dataset.originalText) {
+      el.dataset.originalText = el.textContent; // not innerText
+    }
+
+    const chars = el.dataset.originalText.split("");
     el.innerHTML = chars
-      .map((ch) =>
-        ch === " "
-          ? `<span class="space">&nbsp;</span>`
-          : `<span>${ch}</span>`
-      )
+      .map((ch) => (ch === " " ? `<span class="space">&nbsp;</span>` : `<span>${ch}</span>`))
       .join("");
   }
+
 
   // Split chars that need to be animated individually
   const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
@@ -87,6 +90,10 @@ const animationTimeline = () => {
 
   wrapCharsPreserveSpaces(textBoxChars);
   wrapCharsPreserveSpaces(hbd);
+
+  TweenMax.set(".hbd-chatbox span", { visibility: "hidden" });
+  TweenMax.set(".wish-hbd span", { visibility: "hidden" });
+
 
 
 
@@ -278,6 +285,12 @@ const animationTimeline = () => {
       rotation: -180,
       opacity: 0,
     })
+    .staggerTo(
+      ".wish-hbd span",
+      0.001,
+      { visibility: "visible" },
+      0
+    )
     .staggerFrom(
       ".wish-hbd span",
       0.7,
@@ -290,6 +303,7 @@ const animationTimeline = () => {
       },
       0.1
     )
+
     .staggerFromTo(
       ".wish-hbd span",
       0.7,

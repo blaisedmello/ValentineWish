@@ -341,3 +341,17 @@ body {
     font-weight: lighter;
   }
 }
+
+/* make sure letter spans actually show when GSAP animates them */
+.wish-hbd span,
+.hbd-chatbox span {
+  display: inline-block;
+  white-space: pre;  /* preserves spaces nicely */
+}
+
+/* optional: spaces shouldn't collapse */
+.wish-hbd .space,
+.hbd-chatbox .space {
+  width: 0.35em;
+}
+
