@@ -326,8 +326,8 @@ const animationTimeline = () => {
       },
       {
         opacity: 0.35,
-        scale: 6,
-        y: -25,
+        scale: 8,
+        y: -40,
         yoyo: true,
         repeat: 2,
         ease: Power1.easeInOut
