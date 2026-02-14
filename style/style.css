@@ -2,6 +2,25 @@ html {
   box-sizing: border-box;
 }
 
+#startOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#startBtn {
+  font-size: 18px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;

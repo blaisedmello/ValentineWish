@@ -1,5 +1,11 @@
+// main.js
+
 let musicStarted = false;
 
+/**
+ * Plays background music (called when .idea-1 starts).
+ * Works because audio permission is granted by the Start button click.
+ */
 function startMusic() {
   if (musicStarted) return;
   musicStarted = true;
@@ -11,44 +17,66 @@ function startMusic() {
 
   const p = music.play();
   if (p && typeof p.catch === "function") {
-    p.catch(() => {
-      // Autoplay blocked until user interacts
+    p.catch((e) => {
+      console.log("Music play blocked:", e);
       musicStarted = false;
     });
   }
 }
 
-// Ensures audio can start after the first user interaction (autoplay policy)
-function unlockAudioOnce() {
+/**
+ * Shows a "Tap to start" gate to satisfy autoplay restrictions.
+ * Requires you to have:
+ *  - <div id="startOverlay"><button id="startBtn">...</button></div>
+ * in index.html
+ */
+function initStartGate() {
+  const btn = document.getElementById("startBtn");
+  const overlay = document.getElementById("startOverlay");
   const music = document.getElementById("bgMusic");
-  if (!music) return;
 
-  const unlock = () => {
-    // Try to start immediately; if we don't want it yet, pause right away.
-    music.play().then(() => {
+  if (!btn || !overlay || !music) {
+    console.warn(
+      "Start gate missing: ensure #startBtn, #startOverlay, and #bgMusic exist in index.html"
+    );
+    // If you don't want the gate, you can still try starting immediately:
+    // resolveFetch().then(animationTimeline);
+    return;
+  }
+
+  btn.addEventListener("click", async () => {
+    try {
+      // This click grants audio permission in modern browsers
+      music.volume = 0.6;
+      await music.play();
       music.pause();
       music.currentTime = 0;
-    }).catch(() => {});
-    document.removeEventListener("click", unlock);
-    document.removeEventListener("touchstart", unlock);
-  };
+    } catch (e) {
+      console.log("Audio permission step failed:", e);
+    }
 
-  document.addEventListener("click", unlock, { once: true });
-  document.addEventListener("touchstart", unlock, { once: true });
+    overlay.style.display = "none";
+
+    // Start everything after permission is granted
+    resolveFetch().then(animationTimeline);
+  });
 }
+
 // Animation Timeline
 const animationTimeline = () => {
-  // Spit chars that needs to be animated individually
+  // Split chars that needs to be animated individually
   const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
   const hbd = document.getElementsByClassName("wish-hbd")[0];
 
-  textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
-    .split("")
-    .join("</span><span>")}</span`;
+  if (textBoxChars) {
+    textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
+      .split("")
+      .join("</span><span>")}</span`;
+  }
 
-  hbd.innerHTML = `<span>${hbd.innerHTML
-    .split("")
-    .join("</span><span>")}</span`;
+  if (hbd) {
+    hbd.innerHTML = `<span>${hbd.innerHTML.split("").join("</span><span>")}</span`;
+  }
 
   const ideaTextTrans = {
     opacity: 0,
@@ -65,7 +93,6 @@ const animationTimeline = () => {
   };
 
   const tl = new TimelineMax();
-  unlockAudioOnce();
 
   tl.to(".container", 0.1, {
     visibility: "visible",
@@ -99,7 +126,6 @@ const animationTimeline = () => {
     .from(".three", 0.7, {
       opacity: 0,
       y: 10,
-      // scale: 0.7
     })
     .to(
       ".three",
@@ -139,6 +165,7 @@ const animationTimeline = () => {
       },
       "+=0.7"
     )
+    // ✅ Start music exactly when idea-1 comes in
     .from(".idea-1", 0.7, { ...ideaTextTrans, onStart: startMusic })
     .to(".idea-1", 0.7, ideaTextTransLeave, "+=1.5")
     .from(".idea-2", 0.7, ideaTextTrans)
@@ -232,6 +259,7 @@ const animationTimeline = () => {
       },
       "-=2"
     )
+    // If you don't have .hat in your HTML, you can safely remove this block
     .from(".hat", 0.5, {
       x: -100,
       y: 350,
@@ -244,7 +272,6 @@ const animationTimeline = () => {
       {
         opacity: 0,
         y: -50,
-        // scale: 0.3,
         rotation: 150,
         skewX: "30deg",
         ease: Elastic.easeOut.config(1, 0.5),
@@ -304,47 +331,42 @@ const animationTimeline = () => {
       "+=1"
     );
 
-  // tl.seek("currentStep");
-  // tl.timeScale(2);
-
   // Restart Animation on click
   const replyBtn = document.getElementById("replay");
-  replyBtn.addEventListener("click", () => {
-  const music = document.getElementById("bgMusic");
-  if (music) {
-    music.pause();
-    music.currentTime = 0;
+  if (replyBtn) {
+    replyBtn.addEventListener("click", () => {
+      const music = document.getElementById("bgMusic");
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
+      musicStarted = false;
+      tl.restart();
+    });
   }
-  musicStarted = false;
-  tl.restart();
-});
 };
 
 // Import the data to customize and insert them into page
 const fetchData = () => {
-  fetch("customize.json")
-    .then((data) => data.json())
+  return fetch("customize.json")
+    .then((res) => res.json())
     .then((data) => {
-      Object.keys(data).map((customData) => {
+      Object.keys(data).forEach((customData) => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
-            document
-              .getElementById(customData)
-              .setAttribute("src", data[customData]);
+            document.getElementById(customData)?.setAttribute("src", data[customData]);
           } else {
-            document.getElementById(customData).innerText = data[customData];
+            const el = document.getElementById(customData);
+            if (el) el.innerText = data[customData];
           }
         }
       });
-    });
+    })
+    .catch((e) => console.log("customize.json fetch failed:", e));
 };
 
 // Run fetch and animation in sequence
-const resolveFetch = () => {
-  return new Promise((resolve, reject) => {
-    fetchData();
-    resolve("Fetch done!");
-  });
-};
+const resolveFetch = () => fetchData();
 
-resolveFetch().then(animationTimeline());
+// Start gate entry point
+initStartGate();
