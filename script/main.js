@@ -68,22 +68,25 @@ function initStartGate() {
 
 // Animation Timeline
 const animationTimeline = () => {
-  // Split chars that needs to be animated individually
+  // Helper: wrap each character in a span, preserving spaces
+  function wrapCharsPreserveSpaces(el) {
+    if (!el) return;
+    const chars = el.innerText.split("");
+    el.innerHTML = chars
+      .map((ch) =>
+        ch === " "
+          ? `<span class="space">&nbsp;</span>`
+          : `<span>${ch}</span>`
+      )
+      .join("");
+  }
+
+  // Split chars that need to be animated individually
   const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
   const hbd = document.getElementsByClassName("wish-hbd")[0];
 
-  if (textBoxChars) {
-    textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
-      .split("")
-      .join("</span><span>")}</span`;
-  }
-
-  if (hbd) {
-    hbd.innerHTML = hbd.innerText
-      .split("")
-      .map(char => `<span>${char}</span>`)
-      .join("");
-  }
+  wrapCharsPreserveSpaces(textBoxChars);
+  wrapCharsPreserveSpaces(hbd);
 
 
 
@@ -319,11 +322,11 @@ const animationTimeline = () => {
       {
         visibility: "visible",
         opacity: 0,
-        scale: 80,
+        scale: 60,
         repeat: 3,
-        repeatDelay: 1.4,
+        repeatDelay: 1.0,
       },
-      0.3
+      0.4
     )
     .to(".six", 0.5, {
       opacity: 0,
