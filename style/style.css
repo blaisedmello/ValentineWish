@@ -237,3 +237,15 @@ body {
   .final-valentine { font-size: 1.8rem; }
   .photo-stage { width: 70vw; }
 }
+
+
+.wish-hbd,
+#wishText,
+.final-valentine {
+  transition: opacity 0.4s ease;
+}
+
+.final-valentine {
+  opacity: 0;
+  transform: translateY(10px);
+}
