@@ -1,29 +1,8 @@
-/* style/style.css */
-
-html { box-sizing: border-box; }
-*, *:before, *:after { box-sizing: inherit; }
-
-#startOverlay{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  pointer-events: auto;
+html {
+  box-sizing: border-box;
 }
 
-#startBtn{
-  font-size: 18px;
-  padding: 14px 20px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-body{
+body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
   background-image: url("../img/background.jpg");
@@ -33,56 +12,75 @@ body{
   background-attachment: fixed;
 }
 
-.container{
+/* ========================= */
+/* START OVERLAY */
+/* ========================= */
+
+#startOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#startBtn {
+  font-size: 18px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* ========================= */
+/* MAIN CONTAINER */
+/* ========================= */
+
+.container {
   height: 100vh;
   width: 100vw;
-  margin: 0 auto;
   text-align: center;
   visibility: hidden;
   position: relative;
   overflow: hidden;
 }
 
-.container > div{
+.container > div {
   position: absolute;
   left: 0;
   right: 0;
   top: 20vh;
 }
 
-.container div.six{
-  top: 10vh;
-  z-index: 3;
-}
+/* ========================= */
+/* TEXT SECTIONS */
+/* ========================= */
 
-.container div.seven,
-.container div.eight{
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-}
+.one { font-size: 4.5rem; }
+.two { font-size: 1.2rem; font-weight: lighter; }
+.three { font-size: 3rem; }
 
-.one{ font-size: 4.5rem; }
-.two{ font-size: 1.2rem; font-weight: lighter; }
-.three{ font-size: 3rem; }
-
-.four .text-box{
+.four .text-box {
   width: 600px;
   margin: 0 auto;
   border: 3px solid #aaa;
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 10px;
   position: relative;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(2px);
 }
 
-.text-box p{ margin: 0; text-align: left; }
+.text-box p {
+  margin: 0;
+  text-align: left;
+}
 
-.text-box span{ visibility: hidden; }
+.text-box span {
+  visibility: hidden;
+}
 
-.text-box .fake-btn{
+.fake-btn {
   position: absolute;
   right: 5px;
   bottom: 5px;
@@ -92,159 +90,182 @@ body{
   border-radius: 3px;
 }
 
-.five p{
+/* ========================= */
+/* IDEA SECTION */
+/* ========================= */
+
+.five p {
   font-size: 2rem;
   position: absolute;
   left: 0;
   right: 0;
 }
 
-.idea-3 strong{
-  padding: 3px 8px;
-  border-radius: 6px;
-  display: inline-block;
+.idea-5 {
+  font-size: 4rem;
 }
 
-.five .idea-5{ font-size: 4rem; }
-
-.idea-5 span,
-.idea-6{
+.idea-6 {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
 }
 
-.idea-6 span{
+.idea-6 span {
   font-size: 3rem;
-  display: block;
 }
 
-/* ✅ Photos */
-.photo-stack{
+/* ========================= */
+/* PHOTO + LYRICS SECTION */
+/* ========================= */
+
+.six {
   position: relative;
-  display: inline-block;
-  width: min(340px, 72vw);
-  aspect-ratio: 1 / 1;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.35);
-  margin-bottom: 14px;
+  top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 5;
 }
 
-.photo{
+/* PHOTO STACK AREA */
+.photo-stack {
+  position: relative;
+  width: min(380px, 78vw);
+  height: min(380px, 42vh);
+  overflow: hidden;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.photo {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.03);
-  will-change: opacity, transform;
+  transform: scale(1.04);
+  z-index: 1;
 }
 
-.wish{
+/* LYRICS (ALWAYS ABOVE PHOTOS) */
+.wish {
+  position: relative;
+  z-index: 10;
+  width: min(900px, 92vw);
+  padding: 10px;
+}
+
+.wish-hbd,
+#wishText,
+.final-valentine {
+  margin: 0;
+  color: #ffffff;
+  text-shadow:
+    0 0 8px rgba(0,0,0,0.8),
+    0 2px 6px rgba(0,0,0,0.7),
+    0 0 18px rgba(0,0,0,0.6);
+}
+
+.wish-hbd {
+  font-size: 2.6rem;
+}
+
+#wishText {
+  font-size: 1.5rem;
   margin-top: 10px;
 }
 
-/* ✅ readable text + shadow */
-.hbd-chatbox,
-.one, .two, .three,
-.five p,
-.wish-hbd, .wish h5,
-.final-valentine, .nine p{
-  color: #fff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.65);
-}
-
-/* ✅ wish styles */
-.wish-hbd{
-  font-size: 2.6rem;
-  margin: 0;
-  white-space: pre;
-}
-
-.wish h5{
-  font-weight: 300;
-  font-size: 1.6rem;
-  margin: 12px 0 0;
-  white-space: pre;
-}
-
-.final-valentine{
-  margin-top: 14px;
-  font-size: 2.1rem;
-  font-weight: 600;
+.final-valentine {
+  font-size: 2.8rem;
+  margin-top: 20px;
   opacity: 0;
-  transform: translateY(10px);
 }
 
-/* balloons */
-.baloons img{
-  display: inline-block;
+/* ========================= */
+/* BALLOONS */
+/* ========================= */
+
+.baloons img {
   position: absolute;
   width: 200px;
 }
 
-.baloons img:nth-child(even){ left: 10%; }
-.baloons img:nth-child(odd){ right: 10%; }
-.baloons img:nth-child(3n + 0){ left: 30%; }
+.baloons img:nth-child(even) { left: 10%; }
+.baloons img:nth-child(odd) { right: 10%; }
+.baloons img:nth-child(3n) { left: 30%; }
 
-/* ✅ Soft circles ("fireworks") */
-.eight svg{
-  width: 90px;
-  height: 90px;
-  position: absolute;
+/* ========================= */
+/* SOFT GLOW CIRCLES */
+/* ========================= */
+
+.eight {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
   top: 0;
-  left: 0;
-  visibility: hidden;
-  z-index: 2;
-  opacity: 0;
-  filter: blur(7px);
-  mix-blend-mode: screen; /* blends nicely */
 }
 
-.eight circle{ opacity: 0.85; }
+.eight svg {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 2;
+  filter: blur(6px);
+}
 
-/* positions + palette */
-.eight svg:nth-child(1){ top: 7vh;  left: 5vw;  fill: #dc88b0; }
-.eight svg:nth-child(2){ top: 23vh; left: 35vw; fill: #c276b9; }
-.eight svg:nth-child(3){ top: 33vh; left: 23vw; fill: #e85c6e; }
-.eight svg:nth-child(4){ top: 43vh; left: 57vw; fill: #dc88b0; }
-.eight svg:nth-child(5){ top: 68vh; left: 7vw;  fill: #c276b9; }
-.eight svg:nth-child(6){ top: 42vh; left: 77vw; fill: #e85c6e; }
-.eight svg:nth-child(7){ top: 68vh; left: 83vw; fill: #dc88b0; }
-.eight svg:nth-child(8){ top: 86vh; left: 37vw; fill: #c276b9; }
-.eight svg:nth-child(9){ top: 94vh; left: 87vw; fill: #e85c6e; }
+.eight circle {
+  opacity: 0.8;
+}
 
-.nine p{
+/* Soft pink tones */
+.eight svg:nth-child(1) { top: 7vh; left: 5vw; fill: #ff9acb; }
+.eight svg:nth-child(2) { top: 23vh; left: 35vw; fill: #ff7fb4; }
+.eight svg:nth-child(3) { top: 33vh; left: 23vw; fill: #ffb3da; }
+.eight svg:nth-child(4) { top: 43vh; left: 57vw; fill: #ff9acb; }
+.eight svg:nth-child(5) { top: 68vh; left: 7vw; fill: #ff7fb4; }
+.eight svg:nth-child(6) { top: 42vh; left: 77vw; fill: #ffb3da; }
+.eight svg:nth-child(7) { top: 68vh; left: 83vw; fill: #ff9acb; }
+.eight svg:nth-child(8) { top: 86vh; left: 37vw; fill: #ff7fb4; }
+.eight svg:nth-child(9) { top: 94vh; left: 87vw; fill: #ffb3da; }
+
+/* ========================= */
+/* FINAL SECTION */
+/* ========================= */
+
+.nine p {
   font-size: 2rem;
   font-weight: lighter;
 }
 
-#replay{
-  z-index: 3;
+#replay {
   cursor: pointer;
 }
 
-/* Spans used by the “typing” reveal */
-.wish-hbd span,
-.hbd-chatbox span{
-  display: inline-block;
-  white-space: pre;
-}
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
 
-/* optional: make spaces consistent */
-.wish-hbd .space,
-.hbd-chatbox .space{
-  width: 0.35em;
-}
+@media (max-width: 600px) {
+  .photo-stack {
+    width: min(300px, 85vw);
+    height: min(300px, 34vh);
+  }
 
-@media screen and (max-width: 600px){
-  .four .text-box{ width: 90%; }
-  .five .idea-5{ font-size: 2.8rem; }
-  .idea-6 span{ font-size: 2.2rem; }
-  .wish-hbd{ font-size: 2.1rem; }
-  .wish h5{ font-size: 1.2rem; }
-  .final-valentine{ font-size: 1.7rem; }
+  .wish-hbd {
+    font-size: 2rem;
+  }
+
+  #wishText {
+    font-size: 1.2rem;
+  }
+
+  .final-valentine {
+    font-size: 2rem;
+  }
 }
