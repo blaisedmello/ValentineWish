@@ -358,7 +358,8 @@ const fetchData = () => {
       Object.keys(data).forEach((customData) => {
         if (data[customData] !== "") {
           if (customData === "imagePath") {
-            document.getElementById(customData)?.setAttribute("src", data[customData]);
+            const imgEl = document.getElementById(customData);
+            if (imgEl) imgEl.setAttribute("src", data[customData]);
           } else {
             const el = document.getElementById(customData);
             if (el) el.innerText = data[customData];
@@ -368,6 +369,7 @@ const fetchData = () => {
     })
     .catch((e) => console.log("customize.json fetch failed:", e));
 };
+
 
 // Run fetch and animation in sequence
 const resolveFetch = () => fetchData();
