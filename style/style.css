@@ -1,22 +1,16 @@
-html {
-  box-sizing: border-box;
-}
+/* style/style.css */
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
-}
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
 
 #startOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  pointer-events: auto;
 }
 
 #startBtn {
@@ -25,14 +19,12 @@ html {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  pointer-events: auto;
 }
 
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
 
-  /* static background */
   background-image: url("../img/background.jpg");
   background-size: cover;
   background-position: center;
@@ -40,7 +32,6 @@ body {
   background-attachment: fixed;
 }
 
-/* IMPORTANT: container was width:100vh earlier; should be 100vw */
 .container {
   height: 100vh;
   width: 100vw;
@@ -51,10 +42,7 @@ body {
   overflow: hidden;
 }
 
-.container div.six {
-  top: 10vh;
-  z-index: 3;
-}
+.container div.six { top: 10vh; z-index: 3; }
 
 .container div.seven,
 .container div.eight {
@@ -62,7 +50,6 @@ body {
   height: 100vh;
   position: fixed;
   top: 0;
-  left: 0;
 }
 
 .container > div {
@@ -72,45 +59,23 @@ body {
   top: 20vh;
 }
 
-.one {
-  font-size: 4.5rem;
-  color: white;
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
-}
-
-.two {
-  font-size: 1.2rem;
-  font-weight: lighter;
-  color: white;
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
-}
-
-.three {
-  font-size: 3rem;
-  color: white;
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.45);
-}
+.one { font-size: 4.5rem; }
+.two { font-size: 1.2rem; font-weight: lighter; }
+.three { font-size: 3rem; }
 
 .four .text-box {
   width: 600px;
   margin: 0 auto;
-  border: 3px solid rgba(255, 255, 255, 0.5);
+  border: 3px solid #aaa;
   border-radius: 10px;
   padding: 12px;
   position: relative;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(2px);
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(6px);
 }
 
-.text-box p {
-  margin: 0;
-  text-align: left;
-  color: white;
-}
-
-.text-box span {
-  visibility: hidden;
-}
+.text-box p { margin: 0; text-align: left; }
+.text-box span { visibility: hidden; }
 
 .text-box .fake-btn {
   position: absolute;
@@ -118,9 +83,8 @@ body {
   bottom: 8px;
   color: #fff;
   background-color: rgb(21, 161, 237);
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  padding: 5px 8px;
+  border-radius: 6px;
 }
 
 .five p {
@@ -128,22 +92,17 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  color: white;
-  text-shadow: 0 0 14px rgba(0, 0, 0, 0.55);
 }
 
 .idea-3 strong {
-  padding: 3px 7px;
+  padding: 3px 8px;
   border-radius: 8px;
   display: inline-block;
-  background: rgba(0, 0, 0, 0.25);
 }
 
-.five .idea-5 {
-  font-size: 3rem;
-}
+.five .idea-5 { font-size: 3.2rem; }
 
-/* idea-6: make it NOT huge */
+.idea-5 span,
 .idea-6 {
   display: flex;
   flex-direction: column;
@@ -152,70 +111,80 @@ body {
 }
 
 .idea-6 span {
-  font-size: 2.6rem;
+  font-size: 3rem;
   display: block;
 }
 
-.six {
+/* ✅ Photo stage for smooth crossfade */
+.photo-stage {
   position: relative;
+  display: inline-block;
+  width: min(27vw, 360px);
 }
 
-/* image 40% smaller from your earlier ~45% => 27% */
-.six img {
-  display: inline-block;
-  max-width: 27%;
+/* keep layout height stable */
+.photo-stage::before {
+  content: "";
+  display: block;
+  padding-top: 125%;
+}
+
+.photo-stage .photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
   height: auto;
   border-radius: 18px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  opacity: 0;
+  transform: scale(0.98);
 }
+
+.six { position: relative; }
 
 .wish {
   margin-top: 18px;
 }
 
+/* Wish heading shadow (readable) */
 .wish-hbd {
   font-size: 3em;
   margin: 0;
-  color: white;
-  text-shadow: 0 0 18px rgba(0,0,0,0.55);
+  color: rgba(255,255,255,0.98);
+  text-shadow: 0 3px 18px rgba(0,0,0,0.75);
 }
 
+/* secondary line */
 .wish h5 {
   font-weight: lighter;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin: 10px 0 0;
   color: rgba(255,255,255,0.95);
-  text-shadow: 0 0 14px rgba(0,0,0,0.55);
+  text-shadow: 0 3px 18px rgba(0,0,0,0.75);
 }
 
-.lyrics-display {
-  margin-top: 18px;
-  font-size: 2rem;
-  color: rgba(255,255,255,0.95);
-  text-shadow: 0 0 16px rgba(255, 140, 190, 0.55), 0 0 22px rgba(0,0,0,0.45);
+/* ✅ Final valentine text ONLY on final photo */
+.final-valentine {
+  margin-top: 16px;
+  font-size: 2.2rem;
+  color: rgba(255,255,255,0.98);
+  text-shadow: 0 3px 18px rgba(0,0,0,0.75), 0 0 18px rgba(255,120,170,0.35);
   opacity: 0;
-  transition: opacity 0.35s ease;
-  min-height: 2.2em;
+  transform: translateY(10px);
 }
 
+/* Balloons */
 .baloons img {
   display: inline-block;
   position: absolute;
   width: 200px;
-  opacity: 0.95;
 }
 
-.baloons img:nth-child(even) {
-  left: 10%;
-}
-.baloons img:nth-child(odd) {
-  right: 10%;
-}
-.baloons img:nth-child(3n + 0) {
-  left: 30%;
-}
+.baloons img:nth-child(even) { left: 10%; }
+.baloons img:nth-child(odd) { right: 10%; }
+.baloons img:nth-child(3n + 0) { left: 30%; }
 
-/* ✅ Softer / bigger circles */
+/* ✅ Softer circle fireworks (bigger + blended) */
 .eight svg {
   width: 120px;
   height: 120px;
@@ -223,18 +192,17 @@ body {
   top: 0;
   left: 0;
   visibility: hidden;
-  z-index: 1;
+  z-index: 2;
   opacity: 0;
-
-  /* blend the edge */
-  filter: blur(10px);
+  filter: blur(9px);
+  mix-blend-mode: screen;
 }
 
 .eight circle {
-  opacity: 0.75;
+  opacity: 0.95;
 }
 
-/* positions + colors */
+/* circle positions + colors */
 .eight svg:nth-child(1) { top: 7vh;  left: 5vw;  fill: #dc88b0; }
 .eight svg:nth-child(2) { top: 23vh; left: 35vw; fill: #c276b9; }
 .eight svg:nth-child(3) { top: 33vh; left: 23vw; fill: #e85c6e; }
@@ -245,46 +213,27 @@ body {
 .eight svg:nth-child(8) { top: 86vh; left: 37vw; fill: #c276b9; }
 .eight svg:nth-child(9) { top: 94vh; left: 87vw; fill: #e85c6e; }
 
-.nine p {
-  font-size: 2rem;
-  font-weight: lighter;
-  color: white;
-  text-shadow: 0 0 14px rgba(0,0,0,0.55);
-}
+.nine p { font-size: 2rem; font-weight: lighter; }
+#replay { z-index: 3; cursor: pointer; }
 
-#replay {
-  z-index: 3;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-/* Make sure letter spans show properly when split */
-.wish-hbd span,
-.hbd-chatbox span {
+/* make sure split-letter spans show properly */
+.wish-hbd span, .hbd-chatbox span {
   display: inline-block;
   white-space: pre;
 }
 
-.wish-hbd .space,
-.hbd-chatbox .space {
+/* spaces shouldn't collapse */
+.wish-hbd .space, .hbd-chatbox .space {
   width: 0.35em;
 }
 
-/* Mobile */
+/* Mobile tweaks */
 @media screen and (max-width: 500px) {
-  .four .text-box {
-    width: 90%;
-  }
-  .six img {
-    max-width: 55%;
-  }
-  .idea-6 span {
-    font-size: 1.8rem;
-  }
-  .wish-hbd {
-    font-size: 2.1em;
-  }
-  .lyrics-display {
-    font-size: 1.5rem;
-  }
+  .four .text-box { width: 90%; }
+  .text-box .fake-btn { right: 5px; bottom: -38px; }
+  .five .idea-5 { font-size: 2.3rem; }
+  .idea-6 span { font-size: 2rem; }
+  .wish-hbd { font-size: 2.1em; }
+  .final-valentine { font-size: 1.8rem; }
+  .photo-stage { width: 70vw; }
 }
