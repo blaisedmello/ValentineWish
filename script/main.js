@@ -31,6 +31,10 @@ function startMusic() {
  * in index.html
  */
 function initStartGate() {
+  console.log("initStartGate called");
+  console.log("startBtn:", document.getElementById("startBtn"));
+  console.log("bgMusic:", document.getElementById("bgMusic"));
+
   const btn = document.getElementById("startBtn");
   const overlay = document.getElementById("startOverlay");
   const music = document.getElementById("bgMusic");
@@ -368,5 +372,7 @@ const fetchData = () => {
 // Run fetch and animation in sequence
 const resolveFetch = () => fetchData();
 
-// Start gate entry point
-initStartGate();
+window.addEventListener("DOMContentLoaded", () => {
+  initStartGate();
+});
+

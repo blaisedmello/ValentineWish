@@ -29,7 +29,7 @@ body {
   background-size: cover;          /* fills screen */
   background-position: center;     /* center image */
   background-repeat: no-repeat;    /* no tiling */
-  background-attachment: fixed
+  background-attachment: fixed;
 }
 
 .container {
