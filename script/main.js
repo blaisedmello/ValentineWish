@@ -1,3 +1,41 @@
+let musicStarted = false;
+
+function startMusic() {
+  if (musicStarted) return;
+  musicStarted = true;
+
+  const music = document.getElementById("bgMusic");
+  if (!music) return;
+
+  music.volume = 0.6;
+
+  const p = music.play();
+  if (p && typeof p.catch === "function") {
+    p.catch(() => {
+      // Autoplay blocked until user interacts
+      musicStarted = false;
+    });
+  }
+}
+
+// Ensures audio can start after the first user interaction (autoplay policy)
+function unlockAudioOnce() {
+  const music = document.getElementById("bgMusic");
+  if (!music) return;
+
+  const unlock = () => {
+    // Try to start immediately; if we don't want it yet, pause right away.
+    music.play().then(() => {
+      music.pause();
+      music.currentTime = 0;
+    }).catch(() => {});
+    document.removeEventListener("click", unlock);
+    document.removeEventListener("touchstart", unlock);
+  };
+
+  document.addEventListener("click", unlock, { once: true });
+  document.addEventListener("touchstart", unlock, { once: true });
+}
 // Animation Timeline
 const animationTimeline = () => {
   // Spit chars that needs to be animated individually
@@ -27,6 +65,7 @@ const animationTimeline = () => {
   };
 
   const tl = new TimelineMax();
+  unlockAudioOnce();
 
   tl.to(".container", 0.1, {
     visibility: "visible",
@@ -100,7 +139,7 @@ const animationTimeline = () => {
       },
       "+=0.7"
     )
-    .from(".idea-1", 0.7, ideaTextTrans)
+    .from(".idea-1", 0.7, { ...ideaTextTrans, onStart: startMusic })
     .to(".idea-1", 0.7, ideaTextTransLeave, "+=1.5")
     .from(".idea-2", 0.7, ideaTextTrans)
     .to(".idea-2", 0.7, ideaTextTransLeave, "+=1.5")
@@ -271,8 +310,14 @@ const animationTimeline = () => {
   // Restart Animation on click
   const replyBtn = document.getElementById("replay");
   replyBtn.addEventListener("click", () => {
-    tl.restart();
-  });
+  const music = document.getElementById("bgMusic");
+  if (music) {
+    music.pause();
+    music.currentTime = 0;
+  }
+  musicStarted = false;
+  tl.restart();
+});
 };
 
 // Import the data to customize and insert them into page
